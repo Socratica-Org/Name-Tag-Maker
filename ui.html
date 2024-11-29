@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Upload CSV File</h2>
+  <input type="file" id="csvFile" accept=".csv" />
+  <button onclick="upload()">Upload</button>
+
+  <script>
+    function upload() {
+      const csvFile = document.getElementById('csvFile').files[0];
+
+      if (!csvFile) {
+        alert('Please select a CSV file.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const csvData = event.target.result;
+        parent.postMessage({ pluginMessage: { type: 'csv-upload', data: csvData } }, '*');
+      };
+      reader.readAsText(csvFile);
+    }
+  </script>
+</body>
+</html>
